@@ -15,7 +15,12 @@ const confirmReset = () => {
 <template>
   <div class="controls-container">
     <Button type="warning" @click="confirmReset">Reset State</Button>
-    <Button @click="utilsStore.switchHighlightClickableAreas">Highlight Clickable Areas</Button>
+    <Button
+      @click="utilsStore.switchHighlightClickableAreas"
+      :active="utilsStore.isHighlightClickableAreas"
+    >
+      Highlight Clickable Areas
+    </Button>
     <Button @click="ogSheetStore.undoAction" :disabled="!ogSheetStore.isActionUndoable">
       Undo
     </Button>
@@ -29,7 +34,7 @@ const confirmReset = () => {
 .controls-container {
   margin: 8px;
   display: flex;
-  gap: 8px;
+  gap: 12px;
   justify-content: center;
 }
 </style>

@@ -65,7 +65,7 @@ const switchClasses = computed(() => {
 }
 
 .switch_on {
-  background: black;
+  background: #1e2019;
 }
 
 .switch_off {
@@ -73,12 +73,12 @@ const switchClasses = computed(() => {
 }
 
 .switch_highlighted.switch_on {
-  background: brown;
+  background: #1e2019;
   opacity: 0.8;
 }
 
 .switch_highlighted.switch_off {
-  background: green;
+  background: #394032;
   opacity: 0.5;
 }
 </style>
