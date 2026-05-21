@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Point } from '@/models/Point';
-import { ref } from 'vue';
+import { useOriginalSheetStore } from '@/stores/originalSheetStore';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
   id: string;
@@ -8,23 +9,25 @@ const props = defineProps<{
   size?: Point;
 }>();
 
-const isOn = ref(true);
+const store = useOriginalSheetStore();
+
+const fieldValue = computed(() => store.getField(props.id));
 
 const handleClick = () => {
-  isOn.value = !isOn.value;
+  store.handleFieldChange(props.id, !fieldValue.value);
 };
 
-const boxStyles = (isOn: boolean) => ({
+const boxStyles = computed(() => ({
   top: `${props.position.y}px`,
   left: `${props.position.x}px`,
   height: `${props.size?.y ?? 20}px`,
   width: `${props.size?.x ?? 20}px`,
-  background: isOn ? 'black' : 'transparent',
-});
+  background: fieldValue.value ? 'black' : 'transparent',
+}));
 </script>
 
 <template>
-  <div class="cross" :id="id" :style="boxStyles(isOn)" @click="handleClick"></div>
+  <div class="cross" :id="id" :style="boxStyles" @click="handleClick"></div>
 </template>
 
 <style lang="css" scoped>

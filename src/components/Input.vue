@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import type { Point } from '@/models/Point';
+import { useOriginalSheetStore } from '@/stores/originalSheetStore';
+import { computed } from 'vue';
 
 const props = defineProps<{
   id: string;
   position: Point;
   size?: number;
 }>();
+
+const store = useOriginalSheetStore();
+
+const fieldValue = computed(() => store.getField(props.id));
+
+const handleChange = (event: Event) => {
+  store.handleFieldChange(props.id, (<HTMLInputElement>event.currentTarget).value);
+};
 
 const inputStyles = {
   width: `${props.size ?? 32}px`,
@@ -15,7 +25,7 @@ const inputStyles = {
 </script>
 
 <template>
-  <input :style="inputStyles" :id="id" />
+  <input :style="inputStyles" :id="id" :value="fieldValue" @change="handleChange" />
 </template>
 
 <style lang="css" scoped>

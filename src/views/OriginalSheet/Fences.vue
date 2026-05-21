@@ -3,8 +3,6 @@ import type { Point } from '@/models/Point';
 import { generateLine } from '@/utils/gridGenerators';
 import Line from '@/components/Line.vue';
 
-const SIZE = { x: 6, y: 80 };
-
 const generateFenceRow = (startingPoint: Point, count: number) =>
   generateLine(startingPoint, { y: 0, x: 50.4 }, count, { y: 8, x: 0 });
 
@@ -22,7 +20,6 @@ const houses = [
         v-for="(position, houseIndex) in row"
         :id="`fence-${rowIndex}-${houseIndex}`"
         :position="position"
-        :size="SIZE"
       />
     </div>
   </div>

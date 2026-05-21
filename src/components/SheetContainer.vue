@@ -1,18 +1,9 @@
 <script setup lang="ts">
 const props = defineProps<{ img: string }>();
-
-const handleClick = (event: PointerEvent) => {
-  const divEl = event.currentTarget as HTMLDivElement;
-  console.log(event.clientX - divEl.offsetLeft, event.clientY - divEl.offsetTop);
-};
 </script>
 
 <template>
-  <div
-    class="sheet-container"
-    :style="{ backgroundImage: `url(${props.img})` }"
-    @click="handleClick"
-  >
+  <div class="sheet-container" :style="{ backgroundImage: `url(${props.img})` }">
     <slot></slot>
   </div>
 </template>
