@@ -33,13 +33,14 @@ const { type = 'default' } = defineProps<{
 
 .button:disabled {
   opacity: 0.7;
+  cursor: not-allowed;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   transform: scale(1.05);
 }
 
-.button:active {
+.button:active:not(:disabled) {
   transform: scale(0.98);
   transition: ease 0.03s;
 }

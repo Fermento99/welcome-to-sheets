@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
 const STORE_STORAGE_KEY = 'welcome-to-original-sheet-state';
+const ACTIONS_KEY = 'welcome-to-original-sheet-actions';
+const ACTIONS_INDEX_KEY = 'welcome-to-original-sheet-action-index';
 
 type Value = string | boolean | number | undefined;
 
@@ -15,8 +17,8 @@ type Action = {
 
 export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
   const boardState = ref<SheetMap>(getFromStorage(STORE_STORAGE_KEY, {}));
-  const actions = ref<Action[]>([]);
-  const actionIndex = ref<number>(0);
+  const actions = ref<Action[]>(getFromStorage(ACTIONS_KEY, []));
+  const actionIndex = ref<number>(getFromStorage(ACTIONS_INDEX_KEY, 0));
 
   const getField = computed(() => (id: string) => boardState.value[id]);
 
@@ -30,10 +32,21 @@ export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
 
     actions.value.push(action);
     actionIndex.value++;
+
+    _saveActionsList();
+    _saveActionsIndex();
   };
 
   const _saveBoardState = () => {
     saveToStorage(STORE_STORAGE_KEY, boardState.value);
+  };
+
+  const _saveActionsList = () => {
+    saveToStorage(ACTIONS_KEY, actions.value);
+  };
+
+  const _saveActionsIndex = () => {
+    saveToStorage(ACTIONS_INDEX_KEY, actionIndex.value);
   };
 
   const _updateValue = (id: string, value: Value) => {
@@ -56,6 +69,8 @@ export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
       actionIndex.value--;
       const { fieldId, prev } = actions.value[actionIndex.value]!;
       _updateValue(fieldId, prev);
+
+      _saveActionsIndex();
     }
   };
 
@@ -64,6 +79,8 @@ export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
       const { fieldId, next } = actions.value[actionIndex.value]!;
       _updateValue(fieldId, next);
       actionIndex.value++;
+
+      _saveActionsIndex();
     }
   };
 
@@ -72,6 +89,8 @@ export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
     boardState.value = {};
     actionIndex.value = 0;
     _saveBoardState();
+    _saveActionsList();
+    _saveActionsIndex();
   };
 
   return {
