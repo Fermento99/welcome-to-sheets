@@ -18,8 +18,10 @@ export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
   const actions = ref<Action[]>([]);
   const actionIndex = ref<number>(0);
 
-  console.log(boardState.value);
   const getField = computed(() => (id: string) => boardState.value[id]);
+
+  const isActionUndoable = computed(() => actionIndex.value > 0);
+  const isActionRedoable = computed(() => actionIndex.value < actions.value.length);
 
   const _registrAction = (action: Action) => {
     if (actions.value.length !== actionIndex.value) {
@@ -27,6 +29,7 @@ export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
     }
 
     actions.value.push(action);
+    actionIndex.value++;
   };
 
   const _saveBoardState = () => {
@@ -58,11 +61,27 @@ export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
 
   const redoAction = () => {
     if (actionIndex.value < actions.value.length) {
-      actionIndex.value++;
       const { fieldId, next } = actions.value[actionIndex.value]!;
       _updateValue(fieldId, next);
+      actionIndex.value++;
     }
   };
 
-  return { boardState, handleFieldChange, getField, undoAction, redoAction };
+  const resetState = () => {
+    actions.value = [];
+    boardState.value = {};
+    actionIndex.value = 0;
+    _saveBoardState();
+  };
+
+  return {
+    boardState,
+    isActionUndoable,
+    isActionRedoable,
+    getField,
+    handleFieldChange,
+    undoAction,
+    redoAction,
+    resetState,
+  };
 });

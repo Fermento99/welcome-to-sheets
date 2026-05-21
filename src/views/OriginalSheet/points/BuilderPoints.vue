@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Input from '@/components/Input.vue';
-import Cross from '@/components/Cross.vue';
+import Circle from '@/components/Circle.vue';
 import { SUM_ROW_Y } from './constants';
 import type { Point } from '@/models/Point';
 import { generateLine } from '@/utils/gridGenerators';
@@ -18,9 +18,9 @@ const builders = [
 
 <template>
   <template v-for="(column, columnIndex) in builders">
-    <Cross
+    <Circle
       v-for="(position, index) in column"
-      :id="`builder-cross-${columnIndex}-${index}`"
+      :id="`builder-circle-${columnIndex}-${index}`"
       :position="position"
     />
   </template>

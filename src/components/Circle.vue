@@ -5,5 +5,5 @@ const props = defineProps<Omit<SwitchProps, 'type'>>();
 </script>
 
 <template>
-  <Switch v-bind="props" type="line" />
+  <Switch v-bind="props" type="circle" />
 </template>

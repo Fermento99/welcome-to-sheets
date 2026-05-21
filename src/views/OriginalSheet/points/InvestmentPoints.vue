@@ -3,15 +3,15 @@ import Input from '@/components/Input.vue';
 import { SUM_ROW_Y } from './constants';
 import { generateLine } from '@/utils/gridGenerators';
 import type { Point } from '@/models/Point';
-import Cross from '@/components/Cross.vue';
+import Circle from '@/components/Circle.vue';
 
 const X_INCREMENT = 35.5;
 
-const generateInvestmentCrosses = (startingPoint: Point, count: number) =>
+const generateInvestmentCircles = (startingPoint: Point, count: number) =>
   generateLine(startingPoint, { x: 0, y: 21.4 }, count);
 
-const investmentCrosses = [...Array(6)].map((_, index) =>
-  generateInvestmentCrosses(
+const investmentCircles = [...Array(6)].map((_, index) =>
+  generateInvestmentCircles(
     { y: 558 - 12 * index, x: 323 + (X_INCREMENT - 1.5) * index },
     Math.min(index + 1, 4),
   ),
@@ -22,10 +22,10 @@ const investmentPartialSums = generateLine({ y: SUM_ROW_Y, x: 313 }, { x: X_INCR
 </script>
 
 <template>
-  <div v-for="(column, columnIndex) in investmentCrosses">
-    <Cross
+  <div v-for="(column, columnIndex) in investmentCircles">
+    <Circle
       v-for="(position, index) in column"
-      :id="`investment-cross-${columnIndex}-${index}`"
+      :id="`investment-circle-${columnIndex}-${index}`"
       :position="position"
     />
   </div>
