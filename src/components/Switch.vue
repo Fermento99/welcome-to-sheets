@@ -31,19 +31,54 @@ const switchStyles = computed(() => ({
   left: `${props.position.x}px`,
   height: `${props.size?.y ?? defaultHeight}px`,
   width: `${props.size?.x ?? defaultWidth}px`,
-  background: fieldValue.value || utilsStore.isHighlightClickableAreas ? 'black' : 'transparent',
-  opacity: utilsStore.isHighlightClickableAreas ? (fieldValue.value ? '0.8a' : '0.5') : '1',
-  borderRadius: props.type === 'circle' ? '50%' : 0,
 }));
+
+const switchClasses = computed(() => {
+  const classes = [
+    `switch_${props.type}`,
+    `switch_${fieldValue.value ? 'on' : 'off'}`,
+    utilsStore.isHighlightClickableAreas ? 'switch_highlighted' : undefined,
+  ];
+
+  return classes.filter((className) => className !== undefined).join(' ');
+});
 </script>
 
 <template>
-  <div class="switch" :id="id" :style="switchStyles" @click="handleClick"></div>
+  <div
+    class="switch"
+    :class="switchClasses"
+    :id="id"
+    :style="switchStyles"
+    @click="handleClick"
+  ></div>
 </template>
 
 <style lang="css" scoped>
 .switch {
   position: absolute;
   cursor: pointer;
+}
+
+.switch_circle {
+  border-radius: 50%;
+}
+
+.switch_on {
+  background: black;
+}
+
+.switch_off {
+  background: transparent;
+}
+
+.switch_highlighted.switch_on {
+  background: brown;
+  opacity: 0.8;
+}
+
+.switch_highlighted.switch_off {
+  background: green;
+  opacity: 0.5;
 }
 </style>

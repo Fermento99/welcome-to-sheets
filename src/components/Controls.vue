@@ -1,20 +1,35 @@
 <script setup lang="ts">
 import { useOriginalSheetStore } from '@/stores/originalSheetStore';
 import { useUtilsStore } from '@/stores/utilsStore';
+import Button from './Button.vue';
 
 const ogSheetStore = useOriginalSheetStore();
 const utilsStore = useUtilsStore();
+
+const confirmReset = () => {
+  const isConfirmed = confirm('This action is irreversible');
+  if (isConfirmed) ogSheetStore.resetState();
+};
 </script>
 
 <template>
-  <div>
-    <button @click="ogSheetStore.resetState">reset state</button>
-    <button @click="utilsStore.switchHighlightClickableAreas">highlight clickable areas</button>
-    <button @click="ogSheetStore.undoAction" :disabled="!ogSheetStore.isActionUndoable">
-      Undo action
-    </button>
-    <button @click="ogSheetStore.redoAction" :disabled="!ogSheetStore.isActionRedoable">
-      Redo action
-    </button>
+  <div class="controls-container">
+    <Button type="warning" @click="confirmReset">Reset State</Button>
+    <Button @click="utilsStore.switchHighlightClickableAreas">Highlight Clickable Areas</Button>
+    <Button @click="ogSheetStore.undoAction" :disabled="!ogSheetStore.isActionUndoable">
+      Undo
+    </Button>
+    <Button @click="ogSheetStore.redoAction" :disabled="!ogSheetStore.isActionRedoable">
+      Redo
+    </Button>
   </div>
 </template>
+
+<style lang="css">
+.controls-container {
+  margin: 8px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+</style>
