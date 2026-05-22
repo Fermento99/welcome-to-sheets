@@ -11,7 +11,7 @@ import Fences from './Fences.vue';
 
 <template>
   <Controls />
-  <SheetContainer img="./original-sheet-image.jpg">
+  <SheetContainer img="/welcome-to-sheets/original-sheet-image.jpg">
     <Input id="town-name" :position="{ x: 31, y: 116 }" :size="102" />
     <Houses />
     <Pools />

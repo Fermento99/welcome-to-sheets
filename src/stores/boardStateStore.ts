@@ -15,7 +15,18 @@ type Action = {
   next: Value;
 };
 
-export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
+/**
+ * BoardStateStore saves data from the board.
+ *
+ * @returns isActionUndoable: boolean - true if there is an action that could be reversed
+ * @returns isActionRedoable: boolean - true if there is an action that has been undone and can be re-done
+ * @returns getField(id: string) -> Value - a field getter, returns a value stored under specific id
+ * @returns handleFieldChange(id: string, value: Value) -> void - saves value to the store under provided ID and registers it as an reversible action
+ * @returns undoAction() -> void: undoes most recent field change
+ * @returns redoAction() -> void: redoes most recent field change
+ * @returns resetState - resets the whole store
+ */
+export const useBoardStateStore = defineStore('boardStateStore', () => {
   const boardState = ref<SheetMap>(getFromStorage(STORE_STORAGE_KEY, {}));
   const actions = ref<Action[]>(getFromStorage(ACTIONS_KEY, []));
   const actionIndex = ref<number>(getFromStorage(ACTIONS_INDEX_KEY, 0));
@@ -94,7 +105,6 @@ export const useOriginalSheetStore = defineStore('originalSheetStore', () => {
   };
 
   return {
-    boardState,
     isActionUndoable,
     isActionRedoable,
     getField,

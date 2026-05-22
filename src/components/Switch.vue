@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Point } from '@/models/Point';
-import { useOriginalSheetStore } from '@/stores/originalSheetStore';
+import { useBoardStateStore } from '@/stores/boardStateStore';
 import { useUtilsStore } from '@/stores/utilsStore';
 import { computed } from 'vue';
 
@@ -14,7 +14,7 @@ export type SwitchProps = {
 
 const props = defineProps<SwitchProps>();
 
-const ogSheetStore = useOriginalSheetStore();
+const ogSheetStore = useBoardStateStore();
 const utilsStore = useUtilsStore();
 
 const fieldValue = computed(() => ogSheetStore.getField(props.id));
@@ -56,6 +56,7 @@ const switchClasses = computed(() => {
 
 <style lang="css" scoped>
 .switch {
+  --background-color: #1e2019;
   position: absolute;
   cursor: pointer;
 }
@@ -65,20 +66,25 @@ const switchClasses = computed(() => {
 }
 
 .switch_on {
-  background: #1e2019;
+  background: var(--background-color);
 }
 
 .switch_off {
   background: transparent;
 }
 
-.switch_highlighted.switch_on {
-  background: #1e2019;
-  opacity: 0.8;
+.switch_highlighted {
+  opacity: 0.6;
 }
 
 .switch_highlighted.switch_off {
-  background: #394032;
-  opacity: 0.5;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--background-color),
+    var(--background-color) 3px,
+    transparent 3px,
+    transparent 6px
+  );
+  border: var(--background-color) 2px solid;
 }
 </style>

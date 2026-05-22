@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Point } from '@/models/Point';
-import { useOriginalSheetStore } from '@/stores/originalSheetStore';
+import { useBoardStateStore } from '@/stores/boardStateStore';
 import { computed } from 'vue';
 
 const props = defineProps<{
@@ -9,7 +9,7 @@ const props = defineProps<{
   size?: number;
 }>();
 
-const store = useOriginalSheetStore();
+const store = useBoardStateStore();
 
 const fieldValue = computed(() => store.getField(props.id));
 

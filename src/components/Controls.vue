@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useOriginalSheetStore } from '@/stores/originalSheetStore';
+import { useBoardStateStore } from '@/stores/boardStateStore';
 import { useUtilsStore } from '@/stores/utilsStore';
 import Button from './Button.vue';
 
-const ogSheetStore = useOriginalSheetStore();
+const ogSheetStore = useBoardStateStore();
 const utilsStore = useUtilsStore();
 
 const confirmReset = () => {
