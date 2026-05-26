@@ -6,6 +6,7 @@ import Button from '@/components/Button.vue';
   <div class="buttons-container">
     <h1>Welcome to Sheets!</h1>
     <RouterLink to="/original"><Button> Original Sheet </Button> </RouterLink>
+    <RouterLink to="/dealer"><Button> Dealer View </Button> </RouterLink>
   </div>
 </template>
 
